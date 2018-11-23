@@ -1,7 +1,6 @@
 package com.evayInfo.Inglory.data.mining.platform.factories.machine.learning.recommend
 
 
-
 /**
  * Created by sunlu on 18/11/23.
  */
@@ -85,27 +84,70 @@ class RecommendAlgorithm {
       }
 
     } else if(algorithm_option == "user-based"){
+
+      val simi_threshold = param0.toDouble
+
       if(algorithm_mode == "train"){
+        val recom = new BuildUserBasedModel()
+        recom.UserBased(trainTable,user_col,item_col,rating_col,simi_threshold,modelName)
 
       }else if(algorithm_mode == "predict"){
+        val predict_mode = param1
+        val topN = param2.toInt
+
+        val model_application = new UserBasedModelApplication()
+        if (predict_mode == "rating"){
+          model_application.RatingPrediction(testTable,model_path,user_col,item_col,rating_col,optTable)
+
+        } else if (predict_mode == "top_items"){
+          model_application.TopNProductsForUsers(testTable,model_path,user_col,item_col,rating_col,topN,optTable)
+        } else if (predict_mode == "top_users"){
+          model_application.TopNUsersForProducts(testTable,model_path,user_col,item_col,rating_col,topN,optTable)
+        } else {
+          println(s"wrong $predict_mode value in predict_mode")
+        }
 
       }else if (algorithm_mode == "both"){
+        val recom = new BuildUserBasedModel()
+        recom.UserBased_test(trainTable,user_col,item_col,rating_col,simi_threshold,modelName,testTable,optTable)
 
       }else {
         println(s"wrong $algorithm_mode value in algorithm_mode")
       }
 
     } else if (algorithm_option == "item-based"){
+
+      val simi_threshold = param0.toDouble
+
       if(algorithm_mode == "train"){
 
+        val recom = new BuildItemBasedModel()
+        recom.ItemBased(trainTable,user_col,item_col,rating_col,simi_threshold,modelName)
+
       }else if(algorithm_mode == "predict"){
+        val predict_mode = param1
+        val topN = param2.toInt
+
+        val model_application = new ItemBasedModelApplication()
+        if (predict_mode == "rating"){
+          model_application.RatingPrediction(testTable,model_path,user_col,item_col,rating_col,optTable)
+
+        } else if (predict_mode == "top_items"){
+          model_application.TopNProductsForUsers(testTable,model_path,user_col,item_col,rating_col,topN,optTable)
+        } else if (predict_mode == "top_users"){
+          model_application.TopNUsersForProducts(testTable,model_path,user_col,item_col,rating_col,topN,optTable)
+        } else {
+          println(s"wrong $predict_mode value in predict_mode")
+        }
 
       }else if (algorithm_mode == "both"){
+
+        val recom = new BuildItemBasedModel()
+        recom.ItemBased_test(trainTable,user_col,item_col,rating_col,simi_threshold,modelName,testTable,optTable)
 
       }else {
         println(s"wrong $algorithm_mode value in algorithm_mode")
       }
-
 
     } else {
       println(s"wrong $algorithm_option")

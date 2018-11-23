@@ -314,7 +314,291 @@ http://0.0.0.0:5000/v1/machineLearning
 		"modelName": "user_simi"
 	},
 	"ModelParam":{
-		"param0": "",
+		"param0": "0.0",
+		"param1": "",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+##### (2) predict
+
+###### rating
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "user-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_user_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "user_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "rating",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+###### top_users
+
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "user-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_user_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "user_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "top_users",
+		"param2": "10",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+###### top_items
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "user-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_user_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "user_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "top_items",
+		"param2": "10",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+##### (3) both
+
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "user-based",
+		"mode": "both"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_user_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "user_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+
+
+#### 3)测试 ［机器学习算法库］－［推荐算法］－［基于物品的协同过滤］
+
+##### (1) train
+
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "item-based",
+		"mode": "train"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_item_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "item_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+##### (2) predict
+
+###### rating
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "item-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_item_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "item_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "rating",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+###### top_users
+
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "item-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_item_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "item_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "top_users",
+		"param2": "10",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+###### top_items
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "item-based",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_item_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "item_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
+		"param1": "top_items",
+		"param2": "10",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+##### (3) both
+
+
+POST 方法
+http://0.0.0.0:5000/v1/machineLearning
+
+{
+	"FuncMode":{
+		"algorithm": "recommend",
+		"option": "item-based",
+		"mode": "both"
+	},
+	"TableName":{
+		"trainTable": "recommender_test",
+		"col_names":"user,item,rating",
+		"testTable": "recommender_test",
+		"optTable": "recommenderSys_Demo_Data_sample_pred_item_based"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "item_simi"
+	},
+	"ModelParam":{
+		"param0": "0.0",
 		"param1": "",
 		"param2": "",
 		"param3": "",
