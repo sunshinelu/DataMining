@@ -2,6 +2,7 @@ package com.evayInfo.Inglory.data.mining.platform.factories.text.analysis
 
 import java.util.Properties
 
+import com.evayInfo.Inglory.data.mining.platform.conf.ConfigurationManager
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
 import org.apache.spark.ml.PipelineModel
@@ -30,17 +31,20 @@ class FeatureExtractionModelApplication {
   }
 
   // 链接mysql配置信息
-  val url = "jdbc:mysql://localhost:3306/data_mining_DB?useUnicode=true&characterEncoding=UTF-8&" +
-    "useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-  val user = "root"
-  val password = "root"
+  val url: String = ConfigurationManager.mysql_jdbc_url
+  val user: String = ConfigurationManager.mysql_jdbc_user
+  val password: String = ConfigurationManager.mysql_jdbc_password
+
   val prop = new Properties()
   prop.setProperty("user", user)
   prop.setProperty("password", password)
 
+  val spark_master =  ConfigurationManager.spark_master
+  val spark_executor_memory = ConfigurationManager.spark_executor_memory
+
 
   def FeatureExtractionModel_TF_IDF(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:TF_IDF").setMaster("local[*]").set("spark.executor.memory", "2g")
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:TF_IDF").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
@@ -69,7 +73,7 @@ class FeatureExtractionModelApplication {
   }
 
   def FeatureExtractionModel_Word2Vec(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:Word2Vec").setMaster("local[*]").set("spark.executor.memory", "2g")
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:Word2Vec").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
@@ -96,7 +100,7 @@ class FeatureExtractionModelApplication {
   }
 
   def FeatureExtractionModel_WordCount(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:WordCount").setMaster("local[*]").set("spark.executor.memory", "2g")
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:WordCount").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
