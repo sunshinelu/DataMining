@@ -1,0 +1,1 @@
+https://github.com/shiv4nsh/cassandra-spark-akka-http-starter-kit
