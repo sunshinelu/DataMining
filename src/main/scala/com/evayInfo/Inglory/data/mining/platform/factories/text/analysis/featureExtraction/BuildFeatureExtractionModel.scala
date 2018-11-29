@@ -1,4 +1,4 @@
-package com.evayInfo.Inglory.data.mining.platform.factories.text.analysis
+package com.evayInfo.Inglory.data.mining.platform.factories.text.analysis.featureExtraction
 
 import java.util.Properties
 

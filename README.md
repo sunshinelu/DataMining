@@ -605,3 +605,199 @@ http://0.0.0.0:5000/v1/machineLearning
 		"param4": ""
 	}
 }
+
+
+## 二.［文本分析］
+
+### 1.［文本分析］－［特征抽取］
+
+#### 1）［文本分析］－［特征抽取］－［WordCount]
+
+
+##### (1) train
+
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "WordCount",
+		"mode": "train"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_WordCount"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_wordCount"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+##### (2) predict
+
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "WordCount",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_WordCount"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_wordCount"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+
+#### 2）［机器学习算法库］－［关联规则］－［TF_IDF]
+
+##### (1) train
+
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "TF_IDF",
+		"mode": "train"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_TF_IDF"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_tfIdf"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+##### (2) predict
+
+
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "TF_IDF",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_TF_IDF"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_tfIdf"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+#### 3）［机器学习算法库］－［关联规则］－［Word2Vec]
+
+##### (1) train
+
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "Word2Vec",
+		"mode": "train"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_Word2Vec"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_word2vec"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
+
+
+##### (2) predict
+
+{
+	"FuncMode":{
+		"algorithm": "featureExtraction",
+		"option": "Word2Vec",
+		"mode": "predict"
+	},
+	"TableName":{
+		"trainTable": "Sogou_Classification_mini_segWords_random100",
+		"col_names":"seg_words",
+		"testTable": "Sogou_Classification_mini_segWords_random100",
+		"optTable": "feature_extraction_Word2Vec"
+	},
+	"ModelPath":{
+		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
+		"modelName": "feature_extraction_model_word2vec"
+	},
+	"ModelParam":{
+		"param0": "20",
+		"param1": "2",
+		"param2": "",
+		"param3": "",
+		"param4": ""
+	}
+}
