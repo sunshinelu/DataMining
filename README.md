@@ -660,7 +660,7 @@ http://0.0.0.0:5000/v1/textAnalysis
 		"trainTable": "Sogou_Classification_mini_segWords_random100",
 		"col_names":"seg_words",
 		"testTable": "Sogou_Classification_mini_segWords_random100",
-		"optTable": "feature_extraction_WordCount"
+		"optTable": "feature_extraction_WordCount_predict"
 	},
 	"ModelPath":{
 		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
@@ -726,7 +726,7 @@ http://0.0.0.0:5000/v1/textAnalysis
 		"trainTable": "Sogou_Classification_mini_segWords_random100",
 		"col_names":"seg_words",
 		"testTable": "Sogou_Classification_mini_segWords_random100",
-		"optTable": "feature_extraction_TF_IDF"
+		"optTable": "feature_extraction_TF_IDF_predict"
 	},
 	"ModelPath":{
 		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
@@ -787,7 +787,7 @@ http://0.0.0.0:5000/v1/textAnalysis
 		"trainTable": "Sogou_Classification_mini_segWords_random100",
 		"col_names":"seg_words",
 		"testTable": "Sogou_Classification_mini_segWords_random100",
-		"optTable": "feature_extraction_Word2Vec"
+		"optTable": "feature_extraction_Word2Vec_predict"
 	},
 	"ModelPath":{
 		"filePth": "/Users/sunlu/Documents/workspace/IDEA/DataMining/results/",
