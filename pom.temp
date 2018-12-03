@@ -18,7 +18,7 @@
         <scala.version>2.11.8</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
         <mysql.version>5.1.17</mysql.version>
-        <java.version>1.8</java.version>
+        <java.version>1.7</java.version>
         <hadoop.version>2.6.0</hadoop.version>
         <hbase.version>0.98.4-hadoop2</hbase.version>
         <akka.version>2.5.13</akka.version>
@@ -473,14 +473,57 @@
     </dependencies>
 
     <build>
+        <!--<resources>-->
+        <!--&lt;!&ndash; 将resources和data文件夹打包到jar包中 &ndash;&gt;-->
+        <!--&lt;!&ndash; 参考链接：https://www.cnblogs.com/pixy/p/4798089.html&ndash;&gt;-->
+        <!--<resource>-->
+        <!--<directory>src/main/resources</directory>-->
+        <!--<includes>-->
+        <!--<include>*.txt</include>-->
+        <!--<include>*.ser</include>-->
+        <!--</includes>-->
+        <!--<excludes>-->
+        <!--<exclude>*.xml</exclude>-->
+        <!--</excludes>-->
+        <!--</resource>-->
+        <!--<resource>-->
+        <!--<directory>data</directory>-->
+        <!--</resource>-->
+        <!--</resources>-->
         <resources>
             <resource>
-                <!-- //这个地方是把resources下的配置文件打进包里-->
+                <!-- 这个地方是把resources下的配置文件打进包里-->
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/scala</sourceDirectory>
         <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <classifier>dist</classifier>
+                    <appendAssemblyId>true</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.evayInfo.Inglory.data.mining.platform.boot</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptor>jar-with-dependencies</descriptor>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -490,12 +533,10 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -503,79 +544,60 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
                             <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- //运行的主类-->
                                     <mainClass>com.evayInfo.Inglory.data.mining.platform.boot</mainClass>
                                 </transformer>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>reference.conf</resource>
                                 </transformer>
+
                             </transformers>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<artifactId>maven-assembly-plugin</artifactId>-->
-                <!--<version>2.3</version>-->
-                <!--<configuration>-->
-                    <!--<classifier>dist</classifier>-->
-                    <!--<appendAssemblyId>true</appendAssemblyId>-->
-                    <!--<archive>-->
-                        <!--<manifest>-->
-                            <!--<mainClass>com.evayInfo.Inglory.data.mining.platform.boot</mainClass>-->
-                        <!--</manifest>-->
-                    <!--</archive>-->
-                    <!--<descriptorRefs>-->
-                        <!--<descriptor>jar-with-dependencies</descriptor>-->
-                    <!--</descriptorRefs>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>make-assembly</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>single</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
 
             <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>compile</goal>
-                            <goal>testCompile</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
                     <scalaVersion>${scala.version}</scalaVersion>
+                    <recompileMode>incremental</recompileMode>
+                    <useZincServer>true</useZincServer>
                     <args>
-                        <arg>-target:jvm-1.8</arg>
+                        <arg>-unchecked</arg>
+                        <arg>-deprecation</arg>
+                        <arg>-feature</arg>
                     </args>
+                    <jvmArgs>
+                        <jvmArg>-Xms1024m</jvmArg>
+                        <jvmArg>-Xmx1024m</jvmArg>
+                    </jvmArgs>
+                    <javacArgs>
+                        <javacArg>-source</javacArg>
+                        <javacArg>${java.version}</javacArg>
+                        <javacArg>-target</javacArg>
+                        <javacArg>${java.version}</javacArg>
+                        <javacArg>-Xlint:all,-serial,-path</javacArg>
+                    </javacArgs>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
-
 
 
 </project>

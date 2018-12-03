@@ -21,6 +21,8 @@ import org.apache.spark.sql.functions._
  */
 class FeatureExtractionModelApplication {
 
+  System.setProperty("spark.sql.warehouse.dir","./spark-warehouse")
+
   // 是否输出日志
   def SetLogger = {
     Logger.getLogger("org").setLevel(Level.OFF)
@@ -31,23 +33,33 @@ class FeatureExtractionModelApplication {
   }
 
   // 链接mysql配置信息
-  val url: String = ConfigurationManager.mysql_jdbc_url
-  val user: String = ConfigurationManager.mysql_jdbc_user
-  val password: String = ConfigurationManager.mysql_jdbc_password
+  // 链接mysql配置信息
+  val conf = new ConfigurationManager()
+  val url: String = conf.mysql_jdbc_url
+  val user: String = conf.mysql_jdbc_user
+  val password: String = conf.mysql_jdbc_password
 
   val prop = new Properties()
   prop.setProperty("user", user)
   prop.setProperty("password", password)
 
-  val spark_master =  ConfigurationManager.spark_master
-  val spark_executor_memory = ConfigurationManager.spark_executor_memory
+  val spark_master =  conf.spark_master
+  val spark_executor_memory = conf.spark_executor_memory
 
 
   def FeatureExtractionModel_TF_IDF(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:TF_IDF").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:TF_IDF").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, ipt_table, prop)
@@ -73,10 +85,18 @@ class FeatureExtractionModelApplication {
   }
 
   def FeatureExtractionModel_Word2Vec(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:Word2Vec").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:Word2Vec").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
+
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, ipt_table, prop)
@@ -100,10 +120,18 @@ class FeatureExtractionModelApplication {
   }
 
   def FeatureExtractionModel_WordCount(model_path:String, ipt_table:String, opt_table:String) = {
-    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:WordCount").setMaster("local[*]").set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"FeatureExtractionModelApplication:WordCount").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
+
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, ipt_table, prop)

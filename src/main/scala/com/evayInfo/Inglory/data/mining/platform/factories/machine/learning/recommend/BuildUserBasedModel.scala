@@ -34,20 +34,18 @@ class BuildUserBasedModel {
 
 
   // 链接mysql配置信息
-  //  val url = "jdbc:mysql://localhost:3306/data_mining_DB?useUnicode=true&characterEncoding=UTF-8&" +
-  //    "useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-  //  val user = "root"
-  //  val password = "123456"
-  val url: String = ConfigurationManager.mysql_jdbc_url
-  val user: String = ConfigurationManager.mysql_jdbc_user
-  val password: String = ConfigurationManager.mysql_jdbc_password
+  // 链接mysql配置信息
+  val conf = new ConfigurationManager()
+  val url: String = conf.mysql_jdbc_url
+  val user: String = conf.mysql_jdbc_user
+  val password: String = conf.mysql_jdbc_password
 
   val prop = new Properties()
   prop.setProperty("user", user)
   prop.setProperty("password", password)
 
-  val spark_master =  ConfigurationManager.spark_master
-  val spark_executor_memory = ConfigurationManager.spark_executor_memory
+  val spark_master =  conf.spark_master
+  val spark_executor_memory = conf.spark_executor_memory
 
 
 

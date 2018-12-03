@@ -28,6 +28,8 @@ import org.apache.spark.sql.functions._
  */
 class BuildFeatureExtractionModel {
 
+  System.setProperty("spark.sql.warehouse.dir","./spark-warehouse")
+
   // 是否输出日志
   def SetLogger = {
     Logger.getLogger("org").setLevel(Level.OFF)
@@ -38,24 +40,33 @@ class BuildFeatureExtractionModel {
   }
 
   // 链接mysql配置信息
-  val url: String = ConfigurationManager.mysql_jdbc_url
-  val user: String = ConfigurationManager.mysql_jdbc_user
-  val password: String = ConfigurationManager.mysql_jdbc_password
+  val conf = new ConfigurationManager()
+  val url: String = conf.mysql_jdbc_url
+  val user: String = conf.mysql_jdbc_user
+  val password: String = conf.mysql_jdbc_password
 
   val prop = new Properties()
   prop.setProperty("user", user)
   prop.setProperty("password", password)
 
-  val spark_master =  ConfigurationManager.spark_master
-  val spark_executor_memory = ConfigurationManager.spark_executor_memory
+  val spark_master =  conf.spark_master
+  val spark_executor_memory = conf.spark_executor_memory
 
 
   def WordCount(tableName:String,colName:String,feature_size:Int,min_count:Int,model_path:String,opt_table:String)={
 
-    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").setMaster(spark_master).set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
+
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, tableName, prop)
@@ -98,10 +109,18 @@ class BuildFeatureExtractionModel {
 
 
   def TF_IDF(tableName:String,colName:String,feature_size:Int,min_count:Int,model_path:String,opt_table:String)={
-    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").setMaster(spark_master).set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, tableName, prop)
@@ -148,10 +167,18 @@ class BuildFeatureExtractionModel {
   }
 
   def Word2Vec(tableName:String,colName:String,feature_size:Int,min_count:Int,model_path:String,opt_table:String)={
-    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").setMaster(spark_master).set("spark.executor.memory", spark_executor_memory)
+    val SparkConf = new SparkConf().setAppName(s"BuildFeatureExtractionModel:WordCount").
+      setMaster(spark_master).
+      set("spark.executor.memory", spark_executor_memory).
+      set("spark.sql.warehouse.dir","target/spark-warehouse")
     val spark = SparkSession.builder().config(SparkConf).getOrCreate()
     val sc = spark.sparkContext
     import spark.implicits._
+
+    val h_conf = sc.hadoopConfiguration
+    h_conf.set("fs.hdfs.impl", classOf[org.apache.hadoop.hdfs.DistributedFileSystem].getName)
+    h_conf.set("fs.file.impl", classOf[org.apache.hadoop.fs.LocalFileSystem].getName)
+
 
     // 读取mysql数据
     val ipt_df = spark.read.jdbc(url, tableName, prop)

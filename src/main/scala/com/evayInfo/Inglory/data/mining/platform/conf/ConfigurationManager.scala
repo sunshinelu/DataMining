@@ -21,9 +21,9 @@ class ConfigurationManager {
 
 }
 
-object ConfigurationManager extends ConfigurationManager{
-  def main(args: Array[String]) {
-    println(ConfigurationManager.mysql_jdbc_url)
-    println(spark_executor_memory)
-  }
-}
+//object ConfigurationManager extends ConfigurationManager{
+//  def main(args: Array[String]) {
+//    println(ConfigurationManager.mysql_jdbc_url)
+//    println(spark_executor_memory)
+//  }
+//}

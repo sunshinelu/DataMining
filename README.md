@@ -777,6 +777,9 @@ http://0.0.0.0:5000/v1/textAnalysis
 
 ##### (2) predict
 
+POST 方法
+http://0.0.0.0:5000/v1/textAnalysis
+
 {
 	"FuncMode":{
 		"algorithm": "featureExtraction",
