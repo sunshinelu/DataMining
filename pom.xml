@@ -19,7 +19,7 @@
         <container.version>2.17</container.version>
         <mysql.version>5.1.17</mysql.version>
         <java.version>1.8</java.version>
-        <hadoop.version>2.6.0</hadoop.version>
+        <hadoop.version>3.2.3</hadoop.version>
         <hbase.version>0.98.4-hadoop2</hbase.version>
         <akka.version>2.5.13</akka.version>
         <akka-http.version>10.1.3</akka-http.version>
