@@ -17,7 +17,7 @@
         <fastjson.version>1.2.14</fastjson.version>
         <jetty.version>9.2.5.v20141112</jetty.version>
         <container.version>2.17</container.version>
-        <mysql.version>5.1.17</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <java.version>1.8</java.version>
         <hadoop.version>2.6.0</hadoop.version>
         <hbase.version>0.98.4-hadoop2</hbase.version>
